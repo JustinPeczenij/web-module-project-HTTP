@@ -32,7 +32,11 @@ const App = (props) => {
   }
 
   const addToFavorites = (movie) => {
-    
+    const filteredFavorites = favoriteMovies.find(m => m.id === movie.id)
+    console.log(filteredFavorites)
+    if(filteredFavorites === undefined) {
+      setFavoriteMovies([...favoriteMovies, movie])
+    } else alert('You can only favorite once!')
   }
 
   return (
@@ -56,7 +60,7 @@ const App = (props) => {
             </Route>
 
             <Route path="/movies/:id">
-              <Movie deleteMovie={deleteMovie} />
+              <Movie deleteMovie={deleteMovie} addToFavorites={addToFavorites}/>
             </Route>
 
             <Route path="/movies">

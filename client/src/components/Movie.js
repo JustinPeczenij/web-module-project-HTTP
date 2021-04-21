@@ -59,7 +59,7 @@ const Movie = (props) => {
                         </section>
                         
                         <section>
-                            <span className="m-2 btn btn-dark">Favorite</span>
+                            <button onClick={() => props.addToFavorites(movie)} className="m-2 btn btn-dark">Favorite</button>
                             <Link to={`/movies/edit/${movie.id}`} className="m-2 btn btn-success">Edit</Link>
                             <span className="delete"><input type="button" onClick={handleDelete} className="m-2 btn btn-danger" value="Delete"/></span>
                         </section>
