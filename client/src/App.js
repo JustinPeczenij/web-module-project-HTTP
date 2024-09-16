@@ -8,6 +8,7 @@ import MovieHeader from './components/MovieHeader';
 
 import EditMovieForm from './components/EditMovieForm';
 import FavoriteMovieList from './components/FavoriteMovieList';
+import AddMovieForm from './components/AddMovieForm';
 
 import axios from 'axios';
 
@@ -23,13 +24,19 @@ const App = (props) => {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [ , movies]);
 
   const deleteMovie = (id)=> {
+    const filteredMovies = movies.filter(i => id !== i.id)
+    setMovies(filteredMovies)
   }
 
   const addToFavorites = (movie) => {
-    
+    const filteredFavorites = favoriteMovies.find(m => m.id === movie.id)
+    console.log(filteredFavorites)
+    if(filteredFavorites === undefined) {
+      setFavoriteMovies([...favoriteMovies, movie])
+    } else alert('You can only favorite once!')
   }
 
   return (
@@ -44,11 +51,16 @@ const App = (props) => {
           <FavoriteMovieList favoriteMovies={favoriteMovies}/>
         
           <Switch>
+            <Route path="/movies/add">
+              <AddMovieForm setMovies={setMovies} />
+            </Route>
+
             <Route path="/movies/edit/:id">
+              <EditMovieForm setMovies={setMovies} />
             </Route>
 
             <Route path="/movies/:id">
-              <Movie/>
+              <Movie deleteMovie={deleteMovie} addToFavorites={addToFavorites}/>
             </Route>
 
             <Route path="/movies">
